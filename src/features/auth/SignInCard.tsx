@@ -1,3 +1,5 @@
+'use client'
+
 import DottedDashSeparator from '@/components/DottedDashSeparator'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -19,7 +21,7 @@ import { type LoginSchema, loginSchema } from './auth.schema'
 import { useLogin } from './api/useLogin'
 
 const SignInCard = () => {
-  const {mutate} = useLogin();
+  const {mutate, isPending} = useLogin();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -51,7 +53,7 @@ const SignInCard = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} type='email' placeholder='Enter email address' disabled={false} />
+                    <Input {...field} type='email' placeholder='Enter email address' disabled={isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -64,13 +66,13 @@ const SignInCard = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type='password' placeholder='Enter password' disabled={false} min={8} max={16} />
+                    <Input {...field} type='password' placeholder='Enter password' disabled={isPending} min={8} max={16} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type='submit' className='w-full' size='lg' disabled={false}>
+            <Button type='submit' className='w-full' size='lg' disabled={isPending}>
               Log in
             </Button>
           </form>
@@ -80,11 +82,11 @@ const SignInCard = () => {
         <DottedDashSeparator/>
       </div>
       <CardContent className='p-7 flex flex-col gap-4'>
-        <Button type='button' variant='secondary' className='w-full' size='lg' disabled={false}>
+        <Button type='button' variant='secondary' className='w-full' size='lg' disabled={isPending}>
           <FcGoogle className='size-5 mr-2'/>
           Login with Google
         </Button>
-        <Button type='button' variant='secondary' className='w-full' size='lg' disabled={false}>
+        <Button type='button' variant='secondary' className='w-full' size='lg' disabled={isPending}>
           <FaGithub className='size-5 mr-2'/>
           Login with Github
         </Button>
